@@ -1,4 +1,4 @@
-# Globe Connect for Android
+# Globe Connect for Java
 
 ## Introduction
 Globe Connect for Java provides an implementation of Globe APIs e.g Authentication, Amax,
