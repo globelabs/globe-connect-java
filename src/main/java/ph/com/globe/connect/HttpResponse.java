@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 charleszamora.
@@ -33,103 +33,103 @@ import org.json.JSONObject;
 
 /**
  * HttpResponse helper.
- * 
+ *
  * @author Charles Zamora czamora@openovate.com
  */
 public class HttpResponse {
     /* Set raw response object */
     protected CloseableHttpResponse rawResponse = null;
-    
+
     /* Response string */
     protected String body = null;
-    
+
     /**
      * Create HttpResponse without parameter.
      */
     public HttpResponse() {}
-    
+
     /**
      * Create HttpResponse with response parameter.
-     * 
+     *
      * @param body response string
      */
     public HttpResponse(String body) {
         // set response string
         this.body = body;
     }
-    
+
     /**
      * Create HttpResponse with raw response
      * object parameter.
-     * 
+     *
      * @param rawResponse raw http response
      */
     public HttpResponse(
         CloseableHttpResponse rawResponse) {
-        
+
         // set response
         this.rawResponse = rawResponse;
     }
-    
+
     /**
      * Create HttpResponse with raw response
      * and string response parameter.
-     * 
+     *
      * @param  rawResponse raw http response
      * @param  body response body
      */
     public HttpResponse(
         CloseableHttpResponse rawResponse,
         String body) {
-        
+
         // set raw response
         this.rawResponse = rawResponse;
         // set response body
         this.body = body;
     }
-    
+
     /**
      * Set raw response.
-     * 
+     *
      * @param  rawResponse raw http response
      * @return this
      */
     public HttpResponse setRawResponse(
         CloseableHttpResponse rawResponse) {
-        
+
         // set response
         this.rawResponse = rawResponse;
-        
+
         return this;
     }
-    
+
     /**
      * Set response string.
-     * 
+     *
      * @param  body response string
-     * @return this 
+     * @return this
      */
     public HttpResponse setBody(String body) {
         // set response string
         this.body = body;
-        
+
         return this;
     }
-    
+
     /**
      * Returns the raw response.
-     * 
-     * @return 
+     *
+     * @return CloseableHttpResponse
      */
     public CloseableHttpResponse getRawResponse() {
         return this.rawResponse;
     }
-    
+
     /**
      * Returns the response string.
-     * 
+     *
      * @return String
-     * @throws HttpResponseException
+     * @throws HttpResponseException http response exception
      */
     public String getResponse() throws HttpResponseException {
         // try parsing response
@@ -156,10 +156,10 @@ public class HttpResponse {
             throw new HttpResponseException(e.getMessage());
         }
     }
-    
+
     /**
      * Returns a JSONObject from the response string.
-     * 
+     *
      * @return JSONObject
      * @throws HttpResponseException http response exception
      */
@@ -168,7 +168,7 @@ public class HttpResponse {
         try {
             // get raw response
             String body = this.getResponse();
-            
+
             // parse response string as json
             JSONObject json = new JSONObject(body);
 

@@ -48,351 +48,351 @@ import org.json.JSONObject;
 
 /**
  * Root class for the Voice API.
- * 
+ *
  * @author Charles Zamora czamora@openovate.com
  */
 public class Voice {
     /* Root json object */
     protected JSONObject rootObject = new JSONObject();
-    
+
     /* Root json array */
     protected JSONArray rootArray = new JSONArray();
-    
+
     /**
      * Add an action base on the given
      * action object.
-     * 
-     * @param  base
+     *
+     * @param  base  base class
      * @return this
      */
     public Voice addAction(Base base) {
         // add action
         this.addAction(base, null);
-        
+
         return this;
     }
-    
+
     /**
      * Add an action base on the given
      * action object.
-     * 
-     * @param  base
-     * @param  root
+     *
+     * @param  base  base class
+     * @param  root  root key
      * @return this
      */
     public Voice addAction(Base base, String root) {
         // push to our commands
         if(root != null) {
             this.rootArray.put(base.getAction(root));
-        
+
             return this;
         }
-        
+
         this.rootArray.put(base.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize an "ask" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice ask(Key... keys) {
         // initialize ask
         Ask ask = new Ask(keys);
-        
+
         // push to our commands
         this.rootArray.put(ask.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "call" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice call(Key... keys) {
         // initialize call
         Call call = new Call(keys);
-        
+
         // push to our commands
         this.rootArray.put(call.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "conference" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice conference(Key... keys) {
         // initialize conference
         Conference conference = new Conference(keys);
-        
+
         // push to our commands
         this.rootArray.put(conference.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "hangup" command.
-     * 
+     *
      * @return this
      */
     public Voice hangup() {
         // initialize hangup
         Hangup hangup = new Hangup();
-        
+
         // push to our commands
         this.rootArray.put(hangup.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "joinPrompt" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice joinPrompt(Key... keys) {
         // initialize join prompt
         JoinPrompt joinPrompt = new JoinPrompt(keys);
-        
+
         // push to our commands
         this.rootArray.put(joinPrompt.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "leavePrompt" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice leavePrompt(Key... keys) {
         // initialize leave prompt
         LeavePrompt leavePrompt = new LeavePrompt(keys);
-        
+
         // push to our commands
         this.rootArray.put(leavePrompt.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "machineDetection" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice machineDetection(Key... keys) {
         // initialize machine detection
         MachineDetection machineDetection = new MachineDetection(keys);
-        
+
         // push to our commands
         this.rootArray.put(machineDetection.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "message" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice message(Key... keys) {
         // initialize message
         Message message = new Message(keys);
-        
+
         // push to our commands
         this.rootArray.put(message.getAction());
-        
+
         return this;
     }
- 
+
     /**
      * Initialize an "on" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice on(Key... keys) {
         // initialize on
         On on = new On(keys);
-        
+
         // push to our commands
         this.rootArray.put(on.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "record" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice record(Key... keys) {
         // initialize record
         Record record = new Record(keys);
-        
+
         // push to our commands
         this.rootArray.put(record.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "redirect" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice redirect(Key... keys) {
         // initialize redirect
         Redirect redirect = new Redirect (keys);
-        
+
         // push to our commands
         this.rootArray.put(redirect.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "reject" command.
-     * 
+     *
      * @return this
      */
     public Voice reject() {
         // initialize reject
         Reject reject = new Reject();
-        
+
         // push to our commands
         this.rootArray.put(reject.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "say" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice say(Key... keys) {
         // initialize say
         Say say = new Say(keys);
-        
+
         if(say.getAction().getClass().getSimpleName().equals("JSONArray")) {
             JSONObject json = new JSONObject();
-            
+
             json.put("say", say.getAction());
-            
+
             // push to our commands
             this.rootArray.put(json);
-            
+
             return this;
         }
-        
+
         // push to our commands
         this.rootArray.put(say.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "say" command.
-     * 
-     * @param  value
+     *
+     * @param  value say value
      * @return this
      */
     public Voice say(String value) {
         // initialize say
         Say say = new Say(value);
-        
+
         // push to our commands
         this.rootArray.put(say.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "startRecording" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice startRecording(Key... keys) {
         // initialize start recording
         StartRecording startRecording = new StartRecording(keys);
-        
+
         // push to our commands
         this.rootArray.put(startRecording.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "stopRecording" command.
-     * 
+     *
      * @return this
      */
     public Voice stopRecording() {
         // initialize stop recording
         StopRecording stopRecording = new StopRecording();
-        
+
         // push to our commands
         this.rootArray.put(stopRecording.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "transfer" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice transfer(Key... keys) {
         // initialize transfer
         Transfer transfer = new Transfer(keys);
-        
+
         // push to our commands
         this.rootArray.put(transfer.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Initialize a "wait" command.
-     * 
-     * @param  keys
+     *
+     * @param  keys a list of key instances
      * @return this
      */
     public Voice wait(Key... keys) {
         // initialize wait
         Wait wait = new Wait(keys);
-        
+
         // push to our commands
         this.rootArray.put(wait.getAction());
-        
+
         return this;
     }
-    
+
     /**
      * Renders the json object including
      * all the commands in the root object.
-     * 
+     *
      * @return  JSONObject
      */
     public JSONObject render() {

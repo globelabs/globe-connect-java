@@ -27,14 +27,14 @@ import org.json.JSONObject;
 
 /**
  * Base class for all the voice objects.
- * 
+ *
  * @author Charles Zamora czamora@openovate.com
  */
 public class Base extends JSONObject {
     /**
      * Sets the key value pair.
-     * 
-     * @param keys 
+     *
+     * @param keys list of key instance
      */
     public Base(Key... keys) {
         // iterate on each keys
@@ -43,22 +43,22 @@ public class Base extends JSONObject {
             this.put(key.getName(), key.getValue());
         }
     }
-    
+
     /**
      * Returns the action key value
      * pair without the root key.
-     * 
+     *
      * @return Object
      */
     public Object getAction() {
         return this.getAction(null);
     }
-    
+
     /**
      * Returns the action key value
      * pair with the given root key.
-     * 
-     * @param  root
+     *
+     * @param  root root key
      * @return Object
      */
     public Object getAction(String root) {
@@ -69,30 +69,30 @@ public class Base extends JSONObject {
 
             // replace first char
             instance = instance.substring(0, 1).toLowerCase() + instance.substring(1);
-            
+
             // get the class name
             root = instance;
         }
-        
+
         // return the instance as array?
         if(this.has("fromArray")) {
             // get the target array
             return this.get(this.getString("fromArray"));
         }
-        
+
         return new JSONObject().put(root, this);
     }
-    
+
     /**
      * Removes unnecessary fields.
-     * 
-     * @return String 
+     *
+     * @return String
      */
     @Override
     public String toString() {
         // remove unnecessary field
         this.remove("fromArray");
-        
+
         return super.toString();
     }
 }
