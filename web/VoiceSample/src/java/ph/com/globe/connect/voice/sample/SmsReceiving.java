@@ -5,6 +5,10 @@
  */
 package ph.com.globe.connect.voice.sample;
 
+import java.io.BufferedReader;
+import org.json.JSONObject;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,17 +17,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ph.com.globe.connect.Voice;
-import ph.com.globe.connect.voice.Headers;
-import ph.com.globe.connect.voice.Say;
-import static ph.com.globe.connect.voice.Key.*;
-
 /**
  *
  * @author charleszamora
  */
-@WebServlet(name = "CallTest", urlPatterns = {"/CallTest"})
-public class CallTest extends HttpServlet {
+@WebServlet(name = "SmsReceiving", urlPatterns = {"/SmsReceiving"})
+public class SmsReceiving extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,22 +36,19 @@ public class CallTest extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // trigger via
-        // https://54.251.177.176/sessions?action=create&token=[TOKEN]
-        
-        response.setContentType("application/json;charset=UTF-8");
-        
-        Voice voice = new Voice();
-        
-        voice.call(
-            TO("9065272450"),
-            FROM("sip:21584130@sip.tropo.net")
-        );
-        
-        voice.say("Hello World from Tropo Web API, Have a nice day!");
+        response.setContentType("text/html;charset=UTF-8");
         
         try (PrintWriter out = response.getWriter()) {
-            out.println(voice.render());
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SmsReceiving</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SmsReceiving at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -82,6 +78,28 @@ public class CallTest extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        StringBuilder raw = new StringBuilder();
+        
+        try {
+          BufferedReader reader = request.getReader();
+          String line = null;
+          
+          while ((line = reader.readLine()) != null) {
+            raw.append(line);
+          }
+        } catch (IOException e) {
+            throw new IOException(e.getMessage());
+        }
+
+        try {
+          JSONObject json =  new JSONObject(raw.toString());
+          
+          System.out.println(json.toString(5));
+        } catch (JSONException e) {
+          throw new IOException("An error occured while parsing json string.");
+        }
+        
         processRequest(request, response);
     }
 
