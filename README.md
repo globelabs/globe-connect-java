@@ -1764,9 +1764,9 @@ System.out.println(response);
 
 ```json
 {
-    terminalLocationList:
+    "terminalLocationList":
     {
-        terminalLocation:
+        "terminalLocation":
         [
             {
                 address: "639171234567",
@@ -1801,9 +1801,9 @@ System.out.println(response);
 
 ```json
 {
-    terminalLocationList:
+    "terminalLocationList":
     {
-        terminalLocation:
+        "terminalLocation":
         [
             {
                 address: "639171234567",
